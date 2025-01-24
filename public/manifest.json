@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "name": "Jyuttube",
+  "action": {
+    "default_title": "Jyuttube",
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.youtube.com/watch*",
+        "https://www.youtube.com/watch*",
+        "http://youtube.com/watch*",
+        "https://youtube.com/watch*"
+      ],
+      "js": ["test.ts", "render.ts"]
+    }
+  ],
+  "permissions": ["scripting", "tabs"],
+  "host_permissions": [
+    "http://youtube.com/*",
+    "https://youtube.com/*",
+    "http://*.youtube.com/watch?*",
+    "https://*.youtube.com/watch?*"
+  ]
+}

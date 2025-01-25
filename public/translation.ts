@@ -1,7 +1,7 @@
 import { getJyutpingText } from "to-jyutping";
 import { YoutubeTranscript, TranscriptResponse } from "youtube-transcript";
 
-class TranscriptFetcher {
+export class TranscriptFetcher {
   url: string;
 
   constructor(url: string) {
@@ -15,7 +15,7 @@ class TranscriptFetcher {
   }
 }
 
-class TranscriptTranslator {
+export class TranscriptTranslator {
   transcript: TranscriptResponse[];
 
   constructor(transcript: TranscriptResponse[]) {

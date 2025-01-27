@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
@@ -7,6 +7,8 @@ interface RenderSettings {
   jyutping: boolean;
   pinyin: boolean;
 }
+
+type LanguageFields = "hanzi" | "jyutping" | "pinyin";
 
 const defaultRenderSettings = {
   hanzi: false,
@@ -18,20 +20,32 @@ function App() {
   const [count, setCount] = useState(0);
   const [settings, setSettings] = useState(defaultRenderSettings);
 
-  const getSettings = async () => {
-    const settings: RenderSettings = await chrome.storage.local.get(
-      "renderSettings"
-    );
+  useEffect(() => {
+    const fetchSettings = async () => {
+      await chrome.storage.local.get("renderSettings").then((value) => {
+        const castValue = Object.prototype.hasOwnProperty.call(
+          value,
+          "renderSettings"
+        )
+          ? (value.renderSettings as RenderSettings)
+          : defaultRenderSettings;
 
-    if (settings && typeof settings == RenderSettings) {
-      setSettings(settings);
-    }
+        setSettings(castValue);
+      });
+    };
+
+    fetchSettings();
+  }, []);
+
+  useEffect(() => {
+    chrome.storage.local.set({ renderSettings: settings });
+  }, [settings]);
+
+  const toggleSettings = async (field: LanguageFields) => {
+    const toggled_settings = { ...settings };
+    toggled_settings[field] = !settings[field];
+    setSettings(toggled_settings);
   };
-
-  const renderOptions = {};
-  const renderOptionsForm = document.getElementById("renderOptionsForm");
-
-  renderOptionsForm?.addEventListener("change", (event) => {});
 
   return (
     <>
@@ -59,15 +73,30 @@ function App() {
       </p>
       <form className="form" id="renderOptionsForm">
         <label>
-          <input type="checkbox" value="Hanzi" onChange={() => {}} />
+          <input
+            type="checkbox"
+            name="Hanzi"
+            checked={settings.hanzi}
+            onChange={() => toggleSettings("hanzi")}
+          />
           Hanzi
         </label>
         <label>
-          <input type="checkbox" value="Jyutping" onChange={() => {}} />
+          <input
+            type="checkbox"
+            name="Jyutping"
+            checked={settings.jyutping}
+            onChange={() => toggleSettings("jyutping")}
+          />
           Jyutping
         </label>
         <label>
-          <input type="checkbox" value="Pinyin" onChange={() => {}} />
+          <input
+            type="checkbox"
+            name="Pinyin"
+            checked={settings.pinyin}
+            onChange={() => toggleSettings("pinyin")}
+          />
           Pinyin
         </label>
       </form>

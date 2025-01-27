@@ -14,7 +14,7 @@
         "http://youtube.com/watch*",
         "https://youtube.com/watch*"
       ],
-      "js": ["test.ts", "render.ts"]
+      "js": ["test.ts", "render.js"]
     }
   ],
   "permissions": ["scripting", "tabs", "storage"],

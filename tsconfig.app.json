@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "public/translation.ts"]
+  "include": ["src", "src/content-scripts/translation.ts"]
 }

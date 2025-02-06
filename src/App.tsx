@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
 import reactLogo from "./assets/react.svg";
 import "./App.css";
+import Switch from "./Switch";
 
 interface RenderSettings {
   hanzi: boolean;
@@ -10,7 +12,7 @@ interface RenderSettings {
 
 type LanguageFields = "hanzi" | "jyutping" | "pinyin";
 
-const defaultRenderSettings = {
+const defaultRenderSettings: RenderSettings = {
   hanzi: false,
   jyutping: true,
   pinyin: false,
@@ -20,26 +22,26 @@ function App() {
   const [count, setCount] = useState(0);
   const [settings, setSettings] = useState(defaultRenderSettings);
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      await chrome.storage.local.get("renderSettings").then((value) => {
-        const castValue = Object.prototype.hasOwnProperty.call(
-          value,
-          "renderSettings"
-        )
-          ? (value.renderSettings as RenderSettings)
-          : defaultRenderSettings;
+  // useEffect(() => {
+  //   const fetchSettings = async () => {
+  //     await chrome.storage.local.get("renderSettings").then((value) => {
+  //       const castValue = Object.prototype.hasOwnProperty.call(
+  //         value,
+  //         "renderSettings"
+  //       )
+  //         ? (value.renderSettings as RenderSettings)
+  //         : defaultRenderSettings;
 
-        setSettings(castValue);
-      });
-    };
+  //       setSettings(castValue);
+  //     });
+  //   };
 
-    fetchSettings();
-  }, []);
+  //   fetchSettings();
+  // }, []);
 
-  useEffect(() => {
-    chrome.storage.local.set({ renderSettings: settings });
-  }, [settings]);
+  // useEffect(() => {
+  //   chrome.storage.local.set({ renderSettings: settings });
+  // }, [settings]);
 
   const toggleSettings = async (field: LanguageFields) => {
     const toggled_settings = { ...settings };
@@ -100,6 +102,7 @@ function App() {
           Pinyin
         </label>
       </form>
+      <Switch />
     </>
   );
 }

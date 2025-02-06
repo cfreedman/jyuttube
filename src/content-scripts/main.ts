@@ -11,7 +11,7 @@ const video = document.getElementsByTagName("video")[0];
 
 const captionContainer = document.createElement("div");
 captionContainer.setAttribute("id", "jyuttube_caption_container");
-captionContainer.className = "caption_container";
+captionContainer.className = "captionContainer";
 
 const hanziCaptions = document.createElement("p");
 const jyutpingCaptions = document.createElement("p");

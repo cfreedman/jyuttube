@@ -26,13 +26,27 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
   min-height: 100vh;
+  min-width: 500px;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+p {
+  margin: 0;
 }
 
 button {
@@ -81,11 +95,46 @@ button:focus-visible {
   margin: 0 auto;
 }
 
+.logoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.logoText {
+  font-size: 40px;
+  font-weight: 600;
+  padding-right: 5px;
+}
+
+.logoImage {
+  height: 65px;
+}
+
+.introText {
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.settingsMenu {
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .switchContainer {
-  position: relative;
-  width: 85px;
-  height: 35px;
-  background-color: #646cff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 150px;
+}
+
+.switchLabel {
+  margin: 0;
+  font-size: 16px;
 }
 
 .switch {
@@ -115,7 +164,7 @@ button:focus-visible {
   display: none;
 
   &:checked + span {
-    background-color: #7d0b0b;
+    background-color: #ee1313;
 
     &:before {
       left: 34px;

@@ -1,9 +1,23 @@
 import { JSX } from "react";
 
-export default function Switch(): JSX.Element {
+type SwitchProps = {
+  toggled: boolean;
+  onChange: () => void;
+};
+
+export default function Switch({
+  toggled,
+  onChange,
+}: SwitchProps): JSX.Element {
   return (
-    <div className="switchContainer">
+    <label>
+      <input
+        type="checkbox"
+        checked={toggled}
+        onChange={onChange}
+        className="hiddenInput"
+      />
       <span className="switch" />
-    </div>
+    </label>
   );
 }

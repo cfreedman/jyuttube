@@ -74,6 +74,10 @@ function App() {
         your Youtube videos.
       </p>
       <form className="form" id="renderOptionsForm">
+        <Switch
+          toggled={settings.hanzi}
+          onChange={() => toggleSettings("hanzi")}
+        />
         <label>
           <input
             type="checkbox"
@@ -83,6 +87,10 @@ function App() {
           />
           Hanzi
         </label>
+        <Switch
+          toggled={settings.jyutping}
+          onChange={() => toggleSettings("jyutping")}
+        />
         <label>
           <input
             type="checkbox"
@@ -92,6 +100,10 @@ function App() {
           />
           Jyutping
         </label>
+        <Switch
+          toggled={settings.pinyin}
+          onChange={() => toggleSettings("pinyin")}
+        />
         <label>
           <input
             type="checkbox"
@@ -102,7 +114,6 @@ function App() {
           Pinyin
         </label>
       </form>
-      <Switch />
     </>
   );
 }

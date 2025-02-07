@@ -89,15 +89,38 @@ button:focus-visible {
 }
 
 .switch {
-  display: block;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  margin: 5px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  border: 1 solid #1a1a1a;
-  background-color: white;
-  transition: all 0.3s ease-in 0s;
+  display: flex;
+  position: relative;
+  width: 64px;
+  height: 34px;
+  background-color: #c4c4c4;
+  border-radius: 26px;
+  transition: background-color 0.3s;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background-color: white;
+    box-shadow: #969696 0 0 5px 1px;
+    transition: 0.3s;
+  }
+}
+
+.hiddenInput {
+  display: none;
+
+  &:checked + span {
+    background-color: #7d0b0b;
+
+    &:before {
+      left: 34px;
+      box-shadow: none;
+      background-color: #f2cc0f;
+    }
+  }
 }

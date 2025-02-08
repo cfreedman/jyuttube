@@ -1,5 +1,7 @@
 import { JSX } from "react";
 
+import "../styles/switch.css";
+
 type SwitchProps = {
   toggled: boolean;
   onChange: () => void;

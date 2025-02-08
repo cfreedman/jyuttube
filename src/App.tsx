@@ -1,45 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Logo from "./components/Logo";
 import SettingsMenu from "./components/SettingsMenu";
-
-interface RenderSettings {
-  hanzi: boolean;
-  jyutping: boolean;
-  pinyin: boolean;
-}
-
-type LanguageFields = "hanzi" | "jyutping" | "pinyin";
-
-const defaultRenderSettings: RenderSettings = {
-  hanzi: false,
-  jyutping: true,
-  pinyin: false,
-};
+import {
+  LanguageFields,
+  defaultRenderSettings,
+  RenderSettings,
+} from "./lib/settings";
 
 function App() {
   const [settings, setSettings] = useState(defaultRenderSettings);
+  const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const fetchSettings = async () => {
-  //     await chrome.storage.local.get("renderSettings").then((value) => {
-  //       const castValue = Object.prototype.hasOwnProperty.call(
-  //         value,
-  //         "renderSettings"
-  //       )
-  //         ? (value.renderSettings as RenderSettings)
-  //         : defaultRenderSettings;
+  useEffect(() => {
+    const fetchSettings = async () => {
+      await chrome.storage.local.get("renderSettings").then((value) => {
+        const castValue = Object.prototype.hasOwnProperty.call(
+          value,
+          "renderSettings"
+        )
+          ? (value.renderSettings as RenderSettings)
+          : defaultRenderSettings;
 
-  //       setSettings(castValue);
-  //     });
-  //   };
+        setSettings(castValue);
+        setLoading(false);
+      });
+    };
 
-  //   fetchSettings();
-  // }, []);
+    fetchSettings();
+  }, []);
 
-  // useEffect(() => {
-  //   chrome.storage.local.set({ renderSettings: settings });
-  // }, [settings]);
+  useEffect(() => {
+    chrome.storage.local.set({ renderSettings: settings });
+  }, [settings]);
 
   const toggleSettings = async (field: LanguageFields) => {
     const toggled_settings = { ...settings };
@@ -69,11 +62,13 @@ function App() {
         Please select below what combination of subtitles you want displayed on
         your Youtube videos.
       </p>
-      <SettingsMenu
-        hanzi={settingsMenu.hanzi}
-        jyutping={settingsMenu.jyutping}
-        pinyin={settingsMenu.pinyin}
-      />
+      {!loading && (
+        <SettingsMenu
+          hanzi={settingsMenu.hanzi}
+          jyutping={settingsMenu.jyutping}
+          pinyin={settingsMenu.pinyin}
+        />
+      )}
     </>
   );
 }

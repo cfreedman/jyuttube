@@ -1,0 +1,49 @@
+.switchContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 150px;
+  }
+  
+  .switchLabel {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .switch {
+    display: flex;
+    position: relative;
+    width: 64px;
+    height: 34px;
+    background-color: #c4c4c4;
+    border-radius: 26px;
+    transition: background-color 0.3s;
+  
+    &:before {
+      content: "";
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-color: white;
+      box-shadow: #969696 0 0 5px 1px;
+      transition: 0.3s;
+    }
+  }
+  
+  .hiddenInput {
+    display: none;
+  
+    &:checked + span {
+      background-color: #ee1313;
+  
+      &:before {
+        left: 34px;
+        box-shadow: none;
+        background-color: #f2cc0f;
+      }
+    }
+  }

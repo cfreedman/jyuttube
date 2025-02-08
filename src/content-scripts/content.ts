@@ -1,5 +1,17 @@
-import { TranscriptFetcher, TranscriptTranslator } from "../utils/translation.ts";
-import CaptionSearcher from "../utils/searcher.ts";
+import TranscriptTranslator from "../lib/translation.ts";
+// import CaptionSearcher from "../lib/searcher.ts";
+
+type LanguageFields = "hanzi" | "jyutping" | "pinyin";
+
+type RenderSettings =  {
+  [key in LanguageFields]: boolean;
+}
+
+const defaultRenderSettings: RenderSettings = {
+  hanzi: false,
+  jyutping: true,
+  pinyin: false,
+};
 
 console.log("Running render");
 const videoContainer = document.getElementById("movie_player");
@@ -7,7 +19,7 @@ const videoContainer = document.getElementById("movie_player");
 if (!videoContainer) {
   throw new Error("Unable to find video player container in the current document");
 }
-const video = document.getElementsByTagName("video")[0];
+// const video = document.getElementsByTagName("video")[0];
 
 const captionContainer = document.createElement("div");
 captionContainer.setAttribute("id", "jyuttube_caption_container");
@@ -45,18 +57,6 @@ videoContainer.appendChild(captionContainer);
 //   }
 // });
 
-interface RenderSettings {
-  hanzi: boolean;
-  jyutping: boolean;
-  pinyin: boolean;
-}
-
-const defaultRenderSettings: RenderSettings = {
-  hanzi: false,
-  jyutping: true,
-  pinyin: false,
-};
-
 const handleCaptionVisibility = (settings: RenderSettings) => {
   hanziCaptions.style.visibility = settings.hanzi.toString();
   hanziCaptions.style.visibility = settings.jyutping.toString();
@@ -86,17 +86,30 @@ chrome.storage.onChanged.addListener((changes, area) => {
   handleCaptionVisibility(changes.renderSettings as RenderSettings);
 });
 
-const currentTranscript = await new TranscriptFetcher(
-  window.location.href
-).fetchTranscript();
-const translatedTranscript = new TranscriptTranslator(
-  currentTranscript
-).translate();
-const captionSearcher = new CaptionSearcher(translatedTranscript);
 
-video.ontimeupdate = () => {
+const translator = new TranscriptTranslator();
+const initializeTranslator = async () => {
+  await translator.init(window.location.href);
+
+  const translation = translator.translate();
   for (const child of captionContainer.children) {
-    child.innerHTML = captionSearcher.search(video.currentTime)
+    child.innerHTML = translation[0].translation.hanzi;
   }
-};
+}
+
+initializeTranslator();
+
+
+// const translation = translator.translate();
+// for (const child of captionContainer.children) {
+//   child.innerHTML = translation[0].translation.hanzi;
+// }
+
+// const searcher = new CaptionSearcher(translation);
+
+// video.ontimeupdate = () => {
+//   for (const child of captionContainer.children) {
+//     child.innerHTML = captionSearcher.search(video.currentTime)
+//   }
+// };
 

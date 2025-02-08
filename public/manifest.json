@@ -6,6 +6,17 @@
     "default_title": "Jyuttube",
     "default_popup": "index.html"
   },
+  "content_scripts": [
+    {
+      "matches": [
+          "http://youtube.com/*",
+          "https://youtube.com/*",
+          "http://*.youtube.com/*",
+          "https://*.youtube.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
   "permissions": ["scripting", "tabs", "storage"],
   "host_permissions": [
     "http://youtube.com/*",

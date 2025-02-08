@@ -1,9 +1,9 @@
-import { TranscriptResponse } from "youtube-transcript";
+import { TranscriptTranslation } from "./translation";
 
 export default class CaptionSearcher {
-  #transcript: TranscriptResponse[];
+  #transcript: TranscriptTranslation[];
 
-  constructor(transcript: TranscriptResponse[]) {
+  constructor(transcript: TranscriptTranslation[]) {
     this.#transcript = transcript;
   }
 
@@ -19,7 +19,7 @@ export default class CaptionSearcher {
         timestamp <=
           this.#transcript[mid].offset + this.#transcript[mid].duration
       ) {
-        return this.#transcript[mid].text;
+        return this.#transcript[mid].translation;
       } else if (this.#transcript[mid].offset > timestamp) {
         right = mid - 1;
       } else if (

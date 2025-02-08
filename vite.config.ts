@@ -8,7 +8,7 @@ export default defineConfig({
     target: "esnext",
     rollupOptions: 
       {
-        input: ["./index.html", "./src/content-scripts/main.ts"],
+        input: ["./index.html", "./src/content-scripts/content.ts"],
         output: {
           entryFileNames: (chunk) => {
             if (chunk.facadeModuleId?.includes("index.html")) {

@@ -95,81 +95,9 @@ button:focus-visible {
   margin: 0 auto;
 }
 
-.logoContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.logoText {
-  font-size: 40px;
-  font-weight: 600;
-  padding-right: 5px;
-}
-
-.logoImage {
-  height: 65px;
-}
-
 .introText {
   font-size: 22px;
   margin-bottom: 30px;
 }
 
-.settingsMenu {
-  height: 120px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
 
-.switchContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 150px;
-}
-
-.switchLabel {
-  margin: 0;
-  font-size: 16px;
-}
-
-.switch {
-  display: flex;
-  position: relative;
-  width: 64px;
-  height: 34px;
-  background-color: #c4c4c4;
-  border-radius: 26px;
-  transition: background-color 0.3s;
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background-color: white;
-    box-shadow: #969696 0 0 5px 1px;
-    transition: 0.3s;
-  }
-}
-
-.hiddenInput {
-  display: none;
-
-  &:checked + span {
-    background-color: #ee1313;
-
-    &:before {
-      left: 34px;
-      box-shadow: none;
-      background-color: #f2cc0f;
-    }
-  }
-}

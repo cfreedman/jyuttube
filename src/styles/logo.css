@@ -1,0 +1,17 @@
+.logoContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+.logoText {
+    font-size: 55px;
+    font-weight: 400;
+    padding-right: 5px;
+    font-family: "League Gothic", Arial, Helvetica, sans-serif;
+  }
+  
+  .logoImage {
+    height: 65px;
+  }

@@ -1,6 +1,7 @@
 import { JSX } from "react";
 
 import Switch from "./Switch";
+import "../styles/settings_menu.css";
 
 type LanguageToggleSettings = {
   toggled: boolean;

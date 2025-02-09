@@ -1,4 +1,4 @@
-import { TranscriptTranslation } from "./translation";
+import { TranscriptTranslation, TranslationBlock } from "./translation";
 
 export default class CaptionSearcher {
   #transcript: TranscriptTranslation[];
@@ -7,29 +7,14 @@ export default class CaptionSearcher {
     this.#transcript = transcript;
   }
 
-  search(timestamp: number) {
-    let left = 0;
-    let right = this.#transcript.length - 1;
+  search(timestamp: number): TranslationBlock {
+    const timestampBlock = this.#transcript.find(
+      (block) =>
+        timestamp >= block.offset && timestamp <= block.offset + block.duration
+    );
 
-    while (left <= right) {
-      const mid = (left + right) / 2;
-
-      if (
-        this.#transcript[mid].offset <= timestamp &&
-        timestamp <=
-          this.#transcript[mid].offset + this.#transcript[mid].duration
-      ) {
-        return this.#transcript[mid].translation;
-      } else if (this.#transcript[mid].offset > timestamp) {
-        right = mid - 1;
-      } else if (
-        this.#transcript[mid].offset + this.#transcript[mid].duration <
-        timestamp
-      ) {
-        left = mid + 1;
-      }
-    }
-
-    return "";
+    return timestampBlock
+      ? timestampBlock.translation
+      : { hanzi: "", jyutping: "", pinyin: "" };
   }
 }

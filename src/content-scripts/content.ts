@@ -25,56 +25,38 @@ const video = document.getElementsByTagName("video")[0];
 
 const captionContainer = document.createElement("div");
 captionContainer.setAttribute("id", "jyuttube_caption_container");
-captionContainer.className = "captionContainer";
+captionContainer.style.display = "flex";
+captionContainer.style.position = "absolute";
+captionContainer.style.bottom = "0";
+captionContainer.style.left = "50%";
+captionContainer.style.transform = "translate(-50%,0)";
+captionContainer.style.flexDirection = "column";
+captionContainer.style.alignItems= "center";
+captionContainer.style.justifyContent= "center";
+captionContainer.style.backgroundColor= "black";
+captionContainer.style.color= "white";
+captionContainer.style.fontSize= "18px";
+captionContainer.style.zIndex= "5000";
+captionContainer.style.width= "fit-content";
+captionContainer.style.margin = "0 auto";
+videoContainer.appendChild(captionContainer);
 
 const hanziCaptions = document.createElement("p");
 const jyutpingCaptions = document.createElement("p");
 const pinyinCaptions = document.createElement("p");
-hanziCaptions.innerText = "This is where the hanzi caption will go.";
-jyutpingCaptions.innerText = "This is where the jyutping caption will go.";
-pinyinCaptions.innerText = "This is where the pinyin caption will go.";
 
-captionContainer.appendChild(hanziCaptions);
-captionContainer.appendChild(jyutpingCaptions);
-captionContainer.appendChild(pinyinCaptions);
-videoContainer.appendChild(captionContainer);
+for (const element of [hanziCaptions, jyutpingCaptions, pinyinCaptions]) {
+  element.style.textAlign = "center";
+  element.style.margin = "2px 0px";
+  captionContainer.appendChild(element);
+}
 
-captionContainer.style.display = "flex";
-captionContainer.style.flexDirection = "column";
-captionContainer.style.alignItems = "center";
-captionContainer.style.justifyContent = "center";
-captionContainer.style.backgroundColor = "black";
-captionContainer.style.color = "white";
-captionContainer.style.fontSize = "24px";
-captionContainer.style.position = "relative";
-captionContainer.style.zIndex = "5000";
-captionContainer.style.width = "fit-content";
-captionContainer.style.margin = "0 auto";
-
-// const normalVideoHeight = videoContainer.clientHeight;
-// const fullScreenVideoHeight = window.screen.height;
-// captionContainer.style.top =
-//   (normalVideoHeight * 0.7).toString() +
-//   "px";
-
-// Handle fullscreen changes to reposition caption box - come back to this
-
-// document.addEventListener("fullscreenchange", (event) => {
-//   console.log("Switched into or out of fullscreen");
-//   if (!document.fullscreenElement) {
-//     console.log(document.getElementById("jyuttube_caption_container"));
-//     document.getElementById("jyuttube_caption_container").style.top = (normalVideoHeight * 0.75).toString + "px";
-//   } else {
-//     document.getElementById("jyuttube_caption_container");
-//     document.getElementById("jyuttube_caption_container").style.top = (fullScreenVideoHeight * 0.9).toString() +
-//   "px";
-//   }
-// });
+// Add in full-screen / wide-screen event listening changes here
 
 const handleCaptionVisibility = (settings: RenderSettings) => {
-  hanziCaptions.style.visibility = settings.hanzi.toString();
-  hanziCaptions.style.visibility = settings.jyutping.toString();
-  hanziCaptions.style.visibility = settings.pinyin.toString();
+  hanziCaptions.style.display = settings.hanzi ? "block" : "none";
+  jyutpingCaptions.style.display = settings.jyutping ? "block" : "none";
+  pinyinCaptions.style.display = settings.pinyin ? "block" : "none";
 };
 
 const fetchSettings = async () => {
@@ -85,22 +67,16 @@ const fetchSettings = async () => {
         ? value.renderSettings
         : defaultRenderSettings;
     });
-
+  
+  console.log(`Setting caption visibility using setting ${settings}`);
   handleCaptionVisibility(settings);
 };
 
 fetchSettings();
 
-// chrome.storage.onChanged.addListener((changes, area) => {
-//   if (area !== "local" || Object.prototype.hasOwnProperty.call(changes, "renderSettings")) {
-//     return;
-//   }
-
-//   handleCaptionVisibility(changes.renderSettings as RenderSettings);
-// });
-
 chrome.runtime.onMessage.addListener(
   (message, _sender, sendResponse) => {
+    console.log(`Received message and updating caption visibility with settings ${message}`);
     handleCaptionVisibility(message);
     sendResponse("Settings message successfully received");
   }

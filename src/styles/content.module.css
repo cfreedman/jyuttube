@@ -1,0 +1,19 @@
+.captionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    font-size: 24px;
+    position: relative;
+    z-index: 5000;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.caption {
+    text-align: center;
+    margin: 5px 0px;
+}
+

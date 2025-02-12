@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Logo from "./components/Logo";
 import SettingsMenu from "./components/SettingsMenu";
@@ -12,7 +12,32 @@ function App() {
   const [settings, setSettings] = useState(defaultRenderSettings);
   const [loading, setLoading] = useState(true);
 
+  const messageContentPage = useCallback(async () => {
+    console.log("Attempting to message current tabs about settings change");
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+
+    if (tab.id) {
+      chrome.tabs
+        .sendMessage(tab.id, settings)
+        .then((response) => {
+          console.log("New settings messaged to content page successfully");
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(
+            `Error in messaging new settings to content page with error ${err}`
+          );
+        });
+    } else {
+      console.log("Unable to access tab id for current tab");
+    }
+  }, [settings]);
+
   useEffect(() => {
+    console.log("Fetching setting from chrome local storage");
     const fetchSettings = async () => {
       await chrome.storage.local.get("renderSettings").then((value) => {
         const castValue = Object.prototype.hasOwnProperty.call(
@@ -31,8 +56,13 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log("Caching new settings in chrome storage");
     chrome.storage.local.set({ renderSettings: settings });
   }, [settings]);
+
+  useEffect(() => {
+    messageContentPage();
+  }, [messageContentPage]);
 
   const toggleSettings = async (field: LanguageFields) => {
     const toggled_settings = { ...settings };

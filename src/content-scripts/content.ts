@@ -91,18 +91,20 @@ const fetchSettings = async () => {
 
 fetchSettings();
 
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (
-    area !== "local" ||
-    Object.prototype.hasOwnProperty.call(changes, "renderSettings")
-  ) {
-    return;
+// chrome.storage.onChanged.addListener((changes, area) => {
+//   if (area !== "local" || Object.prototype.hasOwnProperty.call(changes, "renderSettings")) {
+//     return;
+//   }
+
+//   handleCaptionVisibility(changes.renderSettings as RenderSettings);
+// });
+
+chrome.runtime.onMessage.addListener(
+  (message, _sender, sendResponse) => {
+    handleCaptionVisibility(message);
+    sendResponse("Settings message successfully received");
   }
-
-  console.log("Register change in chrome storage settings");
-
-  handleCaptionVisibility(changes.renderSettings as RenderSettings);
-});
+)
 
 const translator = new TranscriptTranslator();
 const initializeTranslator = async () => {

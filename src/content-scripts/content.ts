@@ -14,13 +14,15 @@ const defaultRenderSettings: RenderSettings = {
 };
 
 console.log("Running render");
-const videoContainer = document.getElementById("movie_player");
+// Should be a single container
+const videoContainers = document.getElementsByClassName("html5-video-player");
 
-if (!videoContainer) {
+if (!videoContainers) {
   throw new Error(
     "Unable to find video player container in the current document"
   );
 }
+const videoContainer = videoContainers[0];
 const video = document.getElementsByTagName("video")[0];
 
 const captionContainer = document.createElement("div");
@@ -68,7 +70,8 @@ const fetchSettings = async () => {
         : defaultRenderSettings;
     });
   
-  console.log(`Setting caption visibility using setting ${settings}`);
+  console.log("Setting caption visibility");
+  console.log(settings);
   handleCaptionVisibility(settings);
 };
 

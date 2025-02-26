@@ -13,7 +13,7 @@ My hope is that offering romanization visuals captioned videos will bridge the g
 
 The displayed captions can be customized using the three switches in the popup windows for the Chrome extension. Available text captions are the original hanzi characters, Jyutping, and Pinyin. You can choose any combination of the three to view, and the settings will be saved to your local browser storage.
 
-Captions should appear in the center-bottom position of Youtube videos with qualifying, Chinese character captions. Note that videos without attached captions (i.e. without the option to "Show Transcript" in the bottom of the video description panel) are not compatible with this extension. That includes Youtube, auto-generated captions, user-submitted captions (I believe), and captions editted into the actual video frame by the video uploader (although I hope to work in the future on an extension feature for this last case).
+Captions should appear in the center-bottom position of Youtube videos with qualifying, Chinese character captions. Note that videos without attached captions (i.e. without the option to "Show Transcript" in the bottom of the video description panel) are not compatible with this extension. That includes Youtube, auto-generated captions, user-submitted captions (I believe), and captions edited into the actual video frame by the video uploader (although I hope to work in the future on an extension feature for this last case).
 
 **NOTE - Extension will not currently work in Youtube fullscreen mode due to Youtube automatically despawning and reconstructed portions of the DOM tree - hopefully working on a fix for this in the future**
 

@@ -13,6 +13,10 @@ My hope is that offering romanization visuals captioned videos will bridge the g
 
 The displayed captions can be customized using the three switches in the popup windows for the Chrome extension. Available text captions are the original hanzi characters, Jyutping, and Pinyin. You can choose any combination of the three to view, and the settings will be saved to your local browser storage.
 
+![Popup Settings](/assets/popup.png)
+
+![Caption Box Visual](/assets/example.png)
+
 Captions should appear in the center-bottom position of Youtube videos with qualifying, Chinese character captions. Note that videos without attached captions (i.e. without the option to "Show Transcript" in the bottom of the video description panel) are not compatible with this extension. That includes Youtube, auto-generated captions, user-submitted captions (I believe), and captions edited into the actual video frame by the video uploader (although I hope to work in the future on an extension feature for this last case).
 
 **NOTE - Extension will not currently work in Youtube fullscreen mode due to Youtube automatically despawning and reconstructed portions of the DOM tree - hopefully working on a fix for this in the future**
@@ -22,5 +26,7 @@ Captions should appear in the center-bottom position of Youtube videos with qual
 For those wishing to run the extension and possibly hack on it themselves in a local environment, it is based on a `create-vite` project framework. You can make and view changes only to the popup portion of the extension by running `npm run dev` to start the dev server.
 
 In order to run the entire extension locally, you must build the project using `npm run build`, and then follow to the instructions detailed [here](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world) for uploading the `dist` folder into your local Chrome extensions.
+
+![Chrome Extensions Page](/assets/extensions.png)
 
 **Thanks for your attention and hope this is useful to you!**

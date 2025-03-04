@@ -27,20 +27,7 @@ const video = document.getElementsByTagName("video")[0];
 
 const captionContainer = document.createElement("div");
 captionContainer.setAttribute("id", "jyuttube_caption_container");
-captionContainer.style.display = "flex";
-captionContainer.style.position = "absolute";
-captionContainer.style.bottom = "0";
-captionContainer.style.left = "50%";
-captionContainer.style.transform = "translate(-50%,0)";
-captionContainer.style.flexDirection = "column";
-captionContainer.style.alignItems= "center";
-captionContainer.style.justifyContent= "center";
-captionContainer.style.backgroundColor= "black";
-captionContainer.style.color= "white";
-captionContainer.style.fontSize= "18px";
-captionContainer.style.zIndex= "5000";
-captionContainer.style.width= "fit-content";
-captionContainer.style.margin = "0 auto";
+captionContainer.setAttribute("class", "captionContainer");
 videoContainer.appendChild(captionContainer);
 
 const hanziCaptions = document.createElement("p");
@@ -48,8 +35,7 @@ const jyutpingCaptions = document.createElement("p");
 const pinyinCaptions = document.createElement("p");
 
 for (const element of [hanziCaptions, jyutpingCaptions, pinyinCaptions]) {
-  element.style.textAlign = "center";
-  element.style.margin = "2px 0px";
+  element.setAttribute("class", "caption");
   captionContainer.appendChild(element);
 }
 
@@ -69,7 +55,7 @@ const fetchSettings = async () => {
         ? value.renderSettings
         : defaultRenderSettings;
     });
-  
+
   console.log("Setting caption visibility");
   console.log(settings);
   handleCaptionVisibility(settings);
@@ -77,13 +63,13 @@ const fetchSettings = async () => {
 
 fetchSettings();
 
-chrome.runtime.onMessage.addListener(
-  (message, _sender, sendResponse) => {
-    console.log(`Received message and updating caption visibility with settings ${message}`);
-    handleCaptionVisibility(message);
-    sendResponse("Settings message successfully received");
-  }
-)
+chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+  console.log(
+    `Received message and updating caption visibility with settings ${message}`
+  );
+  handleCaptionVisibility(message);
+  sendResponse("Settings message successfully received");
+});
 
 const translator = new TranscriptTranslator();
 const initializeTranslator = async () => {

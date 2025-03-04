@@ -14,7 +14,8 @@
           "http://*.youtube.com/*",
           "https://*.youtube.com/*"
       ],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["content.css"]
     }
   ],
   "permissions": ["scripting", "tabs", "storage"],
